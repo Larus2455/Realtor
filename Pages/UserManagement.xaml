@@ -1,0 +1,67 @@
+﻿<Page x:Class="CityNest.Pages.UserManagement"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      Title="Управление пользователями" Height="650" Width="800">
+    <Grid Background="#201D2C" Margin="0,0,-328,0">
+
+        <TextBlock Text="Управление пользователями" FontSize="24" FontWeight="Bold" Margin="65,26,708,579" Foreground="#333333"/>
+        <Image Source="/Folder/upr.png" Height="48" VerticalAlignment="Top" Margin="10,19,1058,0"/>
+
+        <GroupBox Header="Поиск и фильтрация" Margin="20,70,13,504" Background="White" BorderBrush="#DDDDDD" BorderThickness="1">
+            <StackPanel Orientation="Horizontal" Margin="10">
+                <TextBlock Text="Поиск:" VerticalAlignment="Center" Margin="0,0,10,0"/>
+                <TextBox x:Name="SearchBox" Width="200" Height="30" Margin="0,0,10,0"/>
+                <Button Content="Найти" Width="100" Height="30" Click="SearchUsers_Click" Background="#2196F3" Foreground="White"/>
+                <TextBlock Text="Статус:" VerticalAlignment="Center" Margin="20,0,10,0"/>
+                <ComboBox x:Name="StatusFilter" Width="150" Height="30" SelectionChanged="StatusFilter_SelectionChanged">
+                    <ComboBoxItem Content="Все"/>
+                    <ComboBoxItem Content="Активные"/>
+                    <ComboBoxItem Content="Заблокированные"/>
+                </ComboBox>
+                <Button Content="Очистить фильтры" Width="150" Height="30" Click="ClearFilters_Click" Background="#FFC107" Foreground="White" Margin="20,0,0,0"/>
+            </StackPanel>
+        </GroupBox>
+
+
+        <GroupBox Header="Список пользователей" Margin="22,150,10,223" Background="White" BorderBrush="#DDDDDD" BorderThickness="1">
+            <DataGrid x:Name="UsersGrid" AutoGenerateColumns="False" Margin="10,0,9,0" Background="White" BorderBrush="#DDDDDD" BorderThickness="1" Height="202">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID" Binding="{Binding UserId}" Width="50" IsReadOnly="True"/>
+                    <DataGridTextColumn Header="Логин" Binding="{Binding Login}" Width="150" IsReadOnly="True"/>
+                    
+                    <DataGridCheckBoxColumn Header="Заблокирован" Binding="{Binding IsLocked}" Width="100"/>
+                    <DataGridTemplateColumn Header="Действие" Width="250">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Сбросить пароль" Width="100" Height="30" Click="ResetPassword_Click" Background="#FFC107" Foreground="White" Margin="0,0,10,0"/>
+                                    <Button Content="Удалить" Width="100" Height="30" Click="DeleteUser_Click" Background="#F44336" Foreground="White" Margin="0,0,10,0"/>
+                                    <Button Content="Отправить email" Width="100" Height="30" Click="SendEmail_Click" Background="#2196F3" Foreground="White" Margin="0,0,10,0"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </GroupBox>
+
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,427,376,152">
+            <Button Content="Экспорт в Excel" Width="150" Height="30" Click="ExportUsersToExcel_Click" Background="#FFC107" Foreground="White" Margin="0,0,10,0"/>
+            <Button Content="Обновить данные" Width="150" Height="30" Click="RefreshData_Click" Background="#2196F3" Foreground="White"/>
+        </StackPanel>
+
+
+        <GroupBox Header="Статистика пользователей" Margin="20,480,764,63" Background="White" BorderBrush="#DDDDDD" BorderThickness="1">
+            <StackPanel Orientation="Horizontal" Margin="10,0,10,0" Height="56">
+                <TextBlock Text="Администраторы:" FontWeight="Bold" Margin="0,0,10,0" Height="35"/>
+                <TextBlock x:Name="AdminCountText" Text="0" Margin="0,0,20,0" Height="32" Width="25"/>
+                <TextBlock Text="Риелторы:" FontWeight="Bold" Margin="0,0,10,0" Height="32"/>
+                <TextBlock x:Name="RealtorCountText" Text="0" Height="28" Width="24"/>
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+</Page>
